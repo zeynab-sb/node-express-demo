@@ -16,7 +16,7 @@ app.get('/api/genres', (req, res) => {
 
 app.post('/api/genres', (req, res) => {
     const {error} = validateGenre(req.body);
-    if(error) return res.send(error.details[0].message);
+    if(error) return res.status(400).send(error.details[0].message);
 
     const genre = {
         id: genres.length + 1,
