@@ -1,11 +1,18 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
 
-const genres = [
-    {id: 1, name: "Action"},
-    {id: 2, name: "Comedy"},
-    {id: 3, name: "Drama"}
-];
+mongoose.connect('mongodb://localhost/vidly');
+
+const genreSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    }
+});
+
+const Genre = mongoose.model('Genre', genreSchema);
+
 
 router.get('/', (req, res) => {
     res.send(genres);
