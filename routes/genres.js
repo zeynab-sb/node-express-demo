@@ -41,16 +41,25 @@ router.post('/', async (req, res) => {
     }
 });
 
-// router.put('/:id', (req, res) => {
-//     const genre = genres.find( g => g.id === parseInt(req.params.id));
-//     if(!genre) return res.status(404).send("The genre with this given ID didn't found.");
+router.put('/:id', async (req, res) => {
+    const genre = await Genre.findById(req.params.id);
+    if(!genre) return res.status(404).send("The genre with this given ID didn't found.");
 
-//     const {error} = validateGenre(req.body);
-//     if(error) return res.status(400).send(error.details[0].message);
+    const {error} = validateGenre(req.body);
+    if(error) return res.status(400).send(error.details[0].message);
 
-//     genre.name = req.body.name;
-//     res.send(genre);
-// });
+
+    try{
+        genre.name = req.body.name;
+        await genre.save();
+    
+        res.send(genre);
+    }
+    catch(ex){
+        res.status(400).send(ex.message)
+    }
+
+});
 
 // router.delete('/:id', (req, res) => {
 //     const genre = genres.find( g => g.id === parseInt(req.params.id));
