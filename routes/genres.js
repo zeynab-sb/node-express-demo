@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
+const Joi = require('joi');
 
 mongoose.connect('mongodb://localhost/vidly');
 
@@ -23,18 +24,22 @@ router.get('/', async (req, res) => {
     }
 });
 
-// router.post('/', (req, res) => {
-//     const {error} = validateGenre(req.body);
-//     if(error) return res.status(400).send(error.details[0].message);
+router.post('/', async (req, res) => {
+    const {error} = validateGenre(req.body);
+    if(error) return res.status(400).send(error.details[0].message);
 
-//     const genre = {
-//         id: genres.length + 1,
-//         name: req.body.name
-//     }
-//     genres.push(genre);
-
-//     res.send(genre);
-// });
+    const genre = new Genre({
+        name: req.body.name
+    })
+    
+    try{
+        const result = await genre.save();
+        res.send(result);
+    }
+    catch(ex){
+        res.status(400).send(ex.message)
+    }
+});
 
 // router.put('/:id', (req, res) => {
 //     const genre = genres.find( g => g.id === parseInt(req.params.id));
@@ -63,12 +68,12 @@ router.get('/', async (req, res) => {
 //     res.send(genre);
 // });
 
-// function validateGenre(genre){
-//     const schema = Joi.object({
-//         name: Joi.string().min(3).required()
-//     });
+function validateGenre(genre){
+    const schema = Joi.object({
+        name: Joi.string().min(3).required()
+    });
 
-//     return schema.validate(genre);
-// }
+    return schema.validate(genre);
+}
 
 module.exports = router;
