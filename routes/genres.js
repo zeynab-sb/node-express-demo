@@ -61,15 +61,18 @@ router.put('/:id', async (req, res) => {
 
 });
 
-// router.delete('/:id', (req, res) => {
-//     const genre = genres.find( g => g.id === parseInt(req.params.id));
-//     if(!genre) return res.status(404).send("The genre with this given ID didn't found.");
+router.delete('/:id', async (req, res) => {
+    const genre = Genre.findById(req.params.id);
+    if(!genre) return res.status(404).send("The genre with this given ID didn't found.");
 
-//     const index = genres.indexOf(genre);
-//     genres.splice(index, 1);
-
-//     res.send(genre);
-// });
+    try{
+        await Genre.deleteOne({_id: req.params.id});
+        res.send(genre);
+    }
+    catch(ex){
+        res.status(400).send(ex.message);
+    }
+})
 
 // router.get('/:id', (req, res) => {
 //     const genre = genres.find(g => g.id === parseInt(req.params.id));
