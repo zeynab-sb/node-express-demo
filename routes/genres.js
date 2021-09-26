@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const router = express.Router();
 const Joi = require('joi');
 
-mongoose.connect('mongodb://localhost/vidly');
 
 const genreSchema = new mongoose.Schema({
     name: {
