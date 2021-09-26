@@ -4,16 +4,14 @@ const router = express.Router();
 const Joi = require('joi');
 
 
-const genreSchema = new mongoose.Schema({
+const Genre = new mongoose.model('Genre', new mongoose.Schema({
     name: {
         type: String,
         required: true,
         minlength: 5,
         maxlength: 50
     }
-});
-
-const Genre = mongoose.model('Genre', genreSchema);
+}));
 
 
 router.get('/', async (req, res) => {
