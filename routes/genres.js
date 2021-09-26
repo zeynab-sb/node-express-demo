@@ -4,7 +4,7 @@ const router = express.Router();
 const Joi = require('joi');
 
 
-const Genre = new mongoose.model('Genre', new mongoose.Schema({
+const Genre = mongoose.model('Genre', new mongoose.Schema({
     name: {
         type: String,
         required: true,
