@@ -27,13 +27,11 @@ router.post('/', async (req, res) => {
     const {error} = validateGenre(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
-    const genre = new Genre({
-        name: req.body.name
-    })
+    let genre = new Genre({name: req.body.name})
     
     try{
-        const result = await genre.save();
-        res.send(result);
+        genre = await genre.save();
+        res.send(genre);
     }
     catch(ex){
         res.status(400).send(ex.message)
