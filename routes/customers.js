@@ -71,9 +71,9 @@ router.get('/:id', async(req,res)=>{
 
 function validateCustomer(customer){
     const schema = Joi.object({
-        isGold: Joi.boolean().required(),
-        name: Joi.string().min(5).max(255).required(),
-        phone: Joi.string().required()
+        isGold: Joi.boolean(),
+        name: Joi.string().min(5).max(55).required(),
+        phone: Joi.string().min(5).max(55).required()
     });
 
     return schema.validate(customer);
