@@ -6,17 +6,19 @@ const Joi = require('joi');
 const Customer = mongoose.model('Customer', new mongoose.Schema({
     isGold:{
         type: Boolean,
-        required: true
+        default: false
     },
     name: {
         type: String,
         required: true,
         minlength: 5,
-        maxlength: 255
+        maxlength: 55
     },
     phone: {
         type: String,
-        required: true
+        required: true,
+        minlength: 5,
+        maxlength: 55
     }
 }));
 
