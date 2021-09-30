@@ -35,7 +35,7 @@ function validateMovie(movie){
         dailyRentalRate: Joi.number().min(0).max(255).required()
     });
 
-    return schema.validate(movie);
+    return Joi.validate(schema, movie);
 }
 
 exports.Movie = Movie;

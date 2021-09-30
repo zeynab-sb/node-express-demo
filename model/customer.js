@@ -27,7 +27,7 @@ function validateCustomer(customer){
         phone: Joi.string().min(5).max(55).required()
     });
 
-    return schema.validate(customer);
+    return Joi.validate(schema, customer);
 }
 
 exports.Customer = Customer;
