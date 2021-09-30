@@ -4,7 +4,9 @@ const {Customer} = require('../model/customer');
 const {Movie} = require('../model/movie');
 const {Rental, validate} = require('../model/rental');
 const Fawn = require('fawn');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const auth = require('../middleware/auth');
+
 
 Fawn.init(mongoose);
 
@@ -13,7 +15,7 @@ router.get('/', async(req,res)=>{
     res.send(rentals);
 });
 
-router.post('/', async(req,res)=>{
+router.post('/', auth, async(req,res)=>{
     const {error} = validate(req.body);
     if(error) return res.status(400).send(error.details[0].message);
     
