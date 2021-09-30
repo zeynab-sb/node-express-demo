@@ -10,10 +10,10 @@ router.get('/', async(req,res)=>{
 
 router.post('/', async(req,res)=>{
     const {error} = validate(req.body);
-    if (error) res.status(400).send(error.details[0].message);
+    if (error) return res.status(400).send(error.details[0].message);
     
     const genre = Genre.findById(req.body.genreId);
-    if(!genre) res.status(404).send("The genre with this given ID didn't found.");
+    if(!genre) return res.status(404).send("The genre with this given ID didn't found.");
 
     let movie = new Movie({
         title: req.body.title,
@@ -32,10 +32,10 @@ router.post('/', async(req,res)=>{
 
 router.put('/:id', async(req,res)=>{
     const {error} = validate(req.body);
-    if (error) res.status(400).send(error.details[0].message);
+    if (error) return res.status(400).send(error.details[0].message);
 
     const genre = Genre.findById(req.body.genreId);
-    if(!genre) res.status(404).send("Invalid genre.");
+    if(!genre) return res.status(404).send("Invalid genre.");
 
     const movie = await Movie.findByIdAndUpdate(req.params.id, {
         title: req.body.title,
@@ -47,21 +47,21 @@ router.put('/:id', async(req,res)=>{
         dailyRentalRate: req.body.dailyRentalRate
     }, {new : true});
 
-    if(!movie) res.status(404).send("The movie with this given ID didn't found.");
+    if(!movie) return res.status(404).send("The movie with this given ID didn't found.");
 
     res.send(movie);
 });
 
 router.delete('/:id', async(req,res)=>{
     const movie = await Movie.findByIdAndRemove(req.params.id);
-    if(!movie) res.status(404).send("The movie with this given ID didn't found.");
+    if(!movie) return res.status(404).send("The movie with this given ID didn't found.");
 
     res.send(movie);
 });
 
 router.get('/:id', async(req,res)=>{
     const movie = await Movie.findById(req.params.id);
-    if(!movie) res.status(404).send("The movie with this given ID didn't found.");
+    if(!movie) return res.status(404).send("The movie with this given ID didn't found.");
 
     res.send(movie);
 })

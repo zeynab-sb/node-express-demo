@@ -8,7 +8,7 @@ router.get('/',async(req,res)=>{
 
 router.post('/', async(req,res)=>{
     const {error} = validate(req.body);
-    if(error) res.status(400).send(error.details[0].message);
+    if(error) return res.status(400).send(error.details[0].message);
 
     let customer = new Customer({
         isGold: req.body.isGold,
@@ -22,7 +22,7 @@ router.post('/', async(req,res)=>{
 
 router.put('/:id', async(req,res)=>{
     const {error} = validate(req.body);
-    if (error) res.status(400).send(error.details[0].message);
+    if (error) return res.status(400).send(error.details[0].message);
 
     const customer = await Customer.findByIdAndUpdate(req.params.id,{
         isGold: req.body.isGold,
@@ -37,14 +37,16 @@ router.put('/:id', async(req,res)=>{
 
 router.delete('/:id', async(req,res)=>{
     const customer = await Customer.findByIdAndRemove(req.params.id);
-    if(!customer) res.status(404).send("The customer with this given ID didn't found.");
+    if(!customer) return res.status(404).send("The customer with this given ID didn't found.");
 
     res.send(customer);
 });
 
 router.get('/:id', async(req,res)=>{
     const customer = await Customer.findById(id);
-    if(!customer) res.status(404).send()
+    if(!customer) return res.status(404).send();
+
+    res.send(customer);
 });
 
 module.exports = router;

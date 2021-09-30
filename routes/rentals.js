@@ -15,15 +15,15 @@ router.get('/', async(req,res)=>{
 
 router.post('/', async(req,res)=>{
     const {error} = validate(req.body);
-    if(error) res.status(400).send(error.details[0].message);
+    if(error) return res.status(400).send(error.details[0].message);
     
     const customer = await Customer.findById(req.body.customerId);
-    if(!customer) res.status(404).send('Invalid customer');
+    if(!customer) return res.status(404).send('Invalid customer');
 
     const movie = await Movie.findById(req.body.movieId);
-    if(!movie) res.status(404).send('Invalid movie');
+    if(!movie) return res.status(404).send('Invalid movie');
 
-    if(movie.numberInStock == 0) res.status(400).send("Movie not in stock.")
+    if(movie.numberInStock == 0) return res.status(400).send("Movie not in stock.")
 
     let rental = new Rental({
         customer: {
@@ -50,6 +50,6 @@ router.post('/', async(req,res)=>{
         res.send(rental);
     }
     catch(ex){
-        res.status(500).send('something failed.')
+        return res.status(500).send('something failed.')
     }
 });
