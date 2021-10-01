@@ -55,3 +55,5 @@ router.post('/', auth, async(req,res)=>{
         return res.status(500).send('something failed.')
     }
 });
+
+module.exports = router;
