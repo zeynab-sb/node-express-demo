@@ -12,6 +12,9 @@ Joi.objectId = require('joi-objectid')(Joi);
 const config = require('config');
 const error = require('./middleware/error');
 require('express-async-errors');
+const winston = require('winston');
+
+winston.add(winston.transports.File, {filename: 'logfile.log'});
 
 if(!config.get('jwtPrivateKey')){
     console.error('FATAL ERROR: jwtPrivateKey is not defined');
