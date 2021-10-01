@@ -15,10 +15,8 @@ require('express-async-errors');
 const winston = require('winston');
 require('winston-mongodb');
 
-process.on('oncaughtException', (ex)=>{
-    console.log('WE GOT UNCAUGHT EXCEPTION');
-    winston.error(ex.message, ex);
-});
+winston.handleExceptions(
+    new winston.transports.File({filename: 'uncaughtException.log'}));
 
 winston.add(winston.transports.File, {filename: 'logfile.log'});
 winston.add(winston.transports.Mongodb, {
