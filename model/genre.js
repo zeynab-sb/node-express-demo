@@ -17,7 +17,7 @@ function validateGenre(genre){
         name: Joi.string().min(5).max(50).required()
     });
 
-    return Joi.validate(schema, genre);
+    return schema.validate(genre);
 }
 
 exports.Genre = Genre;

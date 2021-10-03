@@ -40,7 +40,7 @@ function validateUser(user){
         password: Joi.string().min(5).max(255).required()
     });
 
-    return Joi.validate(schema, user);
+    return schema.validate(genre);
 }
 
 exports.User = User;
