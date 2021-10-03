@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const auth = require('../middleware/auth');
 
 
-Fawn.init(mongoose);
+// Fawn.init(mongoose);
 
 router.get('/', async(req,res)=>{
     const rentals = Rental.find().sort('-dateOut');
